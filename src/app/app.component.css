@@ -1,27 +1,14 @@
 .brand-img {
-    margin: 20px;
-    height: auto;
+  margin: 20px;
+  height: auto;
 }
 
 .navbar {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .user-thumbnail {
-    float: right;
-    margin-right: 40px;
-    margin-top: 30px;
-}
-
-.form-control {
-    width: 100%;
-}
-
-.input-group {
-    margin-top : 20px;
-    margin-bottom : 20px;
-}
-
-.ranking-part > .row {
-    margin: 0px;
+  float: right;
+  margin-right: 40px;
+  margin-top: 30px;
 }
