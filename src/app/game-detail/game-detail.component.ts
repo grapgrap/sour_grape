@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
 })
 export class GameDetailComponent implements OnInit {
   private game: Game;
-  private gameRate: GameRat;
+  private gameRate: GameRate;
 
   private title: string;
   private errorMsg: string;
