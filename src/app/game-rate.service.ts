@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {Game} from "./game";
+import {GameRate} from "./game-rate";
 
 @Injectable()
-export class GameService {
-
+export class GameRateService {
   private url = 'http://52.78.156.169:3000/';
   constructor(private http: Http) {}
 
-  getGames(): Observable<Game[]> {
-    return this.http.get( this.url + 'games' )
+  getGameRates(): Observable<GameRate[]> {
+    return this.http.get( this.url + 'game-rate')
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  getGameByTitle(title: string):Observable<Game>{
-    return this.http.get(this.url + 'game/' + title)
+  getGameRateByTitle(title: string):Observable<GameRate> {
+    return this.http.get( this.url + 'game-rate/' + title )
       .map(this.extractData)
       .catch(this.handleError);
   }
-
 
   private extractData(res: Response) {
     let body = res.json();
@@ -41,4 +39,5 @@ export class GameService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
 }

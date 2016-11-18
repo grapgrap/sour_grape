@@ -1,3 +1,76 @@
-<p>
-  game-detail works!
-</p>
+<div class="container">
+  <div class="row">
+
+    <!--게임 썸네일-->
+    <div class="col-xs-12 col-md-4 game-thumbnail"> <img class="brand-img" src="http://placehold.it/370x250" alt=""> </div>
+
+    <!--게임 평점 그래프-->
+    <div class="col-xs-12 col-md-8 game-rate-graph row">
+      <div class="5-grape-point">
+        <div class="col-xs-1 label label-primary"> 5 </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" aria-valuenow="80" aria-valuemax="100" style="width:80%">
+            전체 유저 수
+          </div>
+          페북 친구 수
+        </div>
+      </div>
+
+      <div class="4-grape-point">
+        <div class="col-xs-1 label label-primary"> 4 </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" aria-valuenow="30" aria-valuemax="100" style="width:30%">
+            전체 유저 수
+          </div>
+          페북 친구 수
+        </div>
+      </div>
+
+      <div class="3-grape-point">
+        <div class="col-xs-1 label label-primary"> 3 </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" aria-valuenow="20" aria-valuemax="100" style="width:20%">
+            전체 유저 수
+          </div>
+          페북 친구 수
+        </div>
+      </div>
+
+      <div class="2-grape-point">
+        <div class="col-xs-1 label label-primary"> 2 </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" aria-valuenow="70" aria-valuemax="100" style="width:70%">
+            전체 유저 수
+          </div>
+          페북 친구 수
+        </div>
+      </div>
+
+      <div class="1-grape-point">
+        <div class="col-xs-1 label label-primary"> 1 </div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" aria-valuenow="40" aria-valuemax="100" style="width:40%">
+            전체 유저 수
+          </div>
+          페북 친구 수
+        </div>
+      </div>
+    </div>
+
+    <!--게임 정보-->
+    <div class="col-xs-12 col-md-4 row game-info">
+      <div class="game-info-detail">
+        <div> {{ game?.title }} </div>
+        <div> {{ game?.publisher }} </div>
+      </div>
+      <div class="col-xs-6 game-total-rate">
+        <div> 전체 평점 </div>
+        <div> {{ gameRate?.rate }} </div>
+      </div>
+      <div class="col-xs-6 game-taste-rate">
+        <div> 취향 평점 </div>
+        <div> 5.0 </div>
+      </div>
+    </div>
+  </div>
+</div>

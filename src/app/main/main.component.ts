@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 
 import { Game } from '../game';
-import { GameService } from '../game.service';
+import { GameRate } from '../game-rate';
+import {GameRateService} from "../game-rate.service";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
-  providers: [ GameService ]
+  providers: [
+    GameRateService
+  ]
 })
 export class MainComponent implements OnInit {
+  gameRates: GameRate[];
 
-  games: Game[];
   isOpen = false;
   errorMsg: string;
 
@@ -20,33 +23,31 @@ export class MainComponent implements OnInit {
   param: any;
 
   constructor(
-    private gameService: GameService,
+    private gameRateService: GameRateService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.getGameRates();
+  }
 
   ngOnInit() {
-    this.getGames();
-    this.param = this.route.params.subscribe(param => this.title = param);
+    this.route.params
+      .map(params => params['title'])
+      .switchMap(title => this.title = title);
   }
 
-  ngOndestroy() {
-    this.param.unsubscribe();
-  }
-
-  public getGames(){
-    this.gameService.getGames()
+  public getGameRates() {
+    this.gameRateService.getGameRates()
       .subscribe(
-        games => this.games = games,
+        gameRates => this.gameRates = gameRates,
         error => this.errorMsg = <any>error
       );
   }
-  public toggleMenu($event) {
-    this.isOpen = !(this.isOpen);
-  }
 
   public onSelect(title: string) {
-    console.log(title);
     this.router.navigate(['/game', title]);
+  }
+  public toggleMenu($event) {
+    this.isOpen = !(this.isOpen);
   }
 }
