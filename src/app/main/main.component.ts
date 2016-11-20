@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router } from "@angular/router";
 
-import { Game } from '../game';
 import { GameRate } from '../game-rate';
 import {GameRateService} from "../game-rate.service";
 
@@ -14,29 +13,20 @@ import {GameRateService} from "../game-rate.service";
   ]
 })
 export class MainComponent implements OnInit {
-  gameRates: GameRate[];
-
-  isOpen = false;
-  errorMsg: string;
-
-  title: string;
-  param: any;
+  private gameRates: GameRate[];
+  private errorMsg: string;
 
   constructor(
     private gameRateService: GameRateService,
-    private route: ActivatedRoute,
     private router: Router
   ) {
-    this.getGameRates();
   }
 
   ngOnInit() {
-    this.route.params
-      .map(params => params['title'])
-      .switchMap(title => this.title = title);
+    this.getGameRates();
   }
 
-  public getGameRates() {
+  private getGameRates() {
     this.gameRateService.getGameRates()
       .subscribe(
         gameRates => this.gameRates = gameRates,
@@ -44,10 +34,16 @@ export class MainComponent implements OnInit {
       );
   }
 
-  public onSelect(title: string) {
+  public moveToGameDetailPage(title: string) {
     this.router.navigate(['/game', title]);
   }
-  public toggleMenu($event) {
-    this.isOpen = !(this.isOpen);
+
+  public moveToResultPage(keyword: string) {
+    if( keyword.length < 4 ) {
+      alert('최소 4글자 이상을 입력해 주세요');
+      return;
+    } else {
+      this.router.navigate(['/search', keyword]);
+    }
   }
 }

@@ -34,7 +34,7 @@ export class GameDetailComponent implements OnInit {
     this.getGameRateByTitle(this.title);
   }
 
-  public getGameByTitle(title: string) {
+  private getGameByTitle(title: string) {
     this.gameService.getGameByTitle(title)
         .subscribe(
           game => this.game = game[0],
@@ -42,7 +42,7 @@ export class GameDetailComponent implements OnInit {
     );
   }
 
-  public getGameRateByTitle(title: string) {
+  private getGameRateByTitle(title: string) {
     this.gameRateService.getGameRateByTitle(title)
       .subscribe(
         gameRate => this.gameRate = gameRate[0],

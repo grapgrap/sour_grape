@@ -20,10 +20,10 @@ export class GameRateService {
       .catch(this.handleError);
   }
 
+
   private extractData(res: Response) {
     let body = res.json();
     let data = body || {};
-    console.log(data);
     return data;
   }
 

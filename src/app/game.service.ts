@@ -21,11 +21,16 @@ export class GameService {
       .catch(this.handleError);
   }
 
+  getGamesByKeyword(keyword: string):Observable<Game[]>{
+    return this.http.get(this.url + 'search/' + keyword)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
 
   private extractData(res: Response) {
     let body = res.json();
     let data = body || {};
-    console.log(data);
     return data;
   }
 
