@@ -46,4 +46,27 @@ export class MainComponent implements OnInit {
       this.router.navigate(['/search', keyword]);
     }
   }
+
+  private getRatePercent(target:number):string {
+    let percent:string;
+    switch (target) {
+      case 1:
+        percent = '' + 10;
+        break;
+      case 2:
+        percent = '' + 70;
+        break;
+      case 3:
+        percent = '' + 90;
+        break;
+      case 4:
+        percent = '' + 40;
+        break;
+      case 5:
+        percent = '' + 100;
+        break;
+    }
+
+    return percent;
+  }
 }

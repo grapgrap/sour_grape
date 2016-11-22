@@ -55,4 +55,27 @@ export class GameDetailComponent implements OnInit {
     let temp: string[] = currentPath.split('/game/');
     this.title = temp[1];
   }
+
+  private getRatePercent(target:number):string {
+    let percent:string;
+    switch (target) {
+      case 1:
+        percent = '' + 10;
+        break;
+      case 2:
+        percent = '' + 70;
+        break;
+      case 3:
+        percent = '' + 90;
+        break;
+      case 4:
+        percent = '' + 40;
+        break;
+      case 5:
+        percent = '' + 100;
+        break;
+    }
+
+    return percent;
+  }
 }

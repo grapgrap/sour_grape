@@ -9,50 +9,45 @@
       <div class="5-grape-point">
         <div class="col-xs-1 label label-primary"> 5 </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-info" aria-valuenow="80" aria-valuemax="100" style="width:80%">
-            전체 유저 수
+          <div class="progress-bar progress-bar-info" [style.width.%]="getRatePercent(5)">
+            {{ getRatePercent(5) }}%
           </div>
-          페북 친구 수
         </div>
       </div>
 
       <div class="4-grape-point">
         <div class="col-xs-1 label label-primary"> 4 </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-info" aria-valuenow="30" aria-valuemax="100" style="width:30%">
-            전체 유저 수
+          <div class="progress-bar progress-bar-info" [style.width.%]="getRatePercent(4)">
+            {{ getRatePercent(4) }}%
           </div>
-          페북 친구 수
         </div>
       </div>
 
       <div class="3-grape-point">
         <div class="col-xs-1 label label-primary"> 3 </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-info" aria-valuenow="20" aria-valuemax="100" style="width:20%">
-            전체 유저 수
+          <div class="progress-bar progress-bar-info" [style.width.%]="getRatePercent(3)">
+            {{ getRatePercent(3) }}%
           </div>
-          페북 친구 수
         </div>
       </div>
 
       <div class="2-grape-point">
         <div class="col-xs-1 label label-primary"> 2 </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-info" aria-valuenow="70" aria-valuemax="100" style="width:70%">
-            전체 유저 수
+          <div class="progress-bar progress-bar-info" [style.width.%]="getRatePercent(2)">
+            {{ getRatePercent(2) }}%
           </div>
-          페북 친구 수
         </div>
       </div>
 
       <div class="1-grape-point">
         <div class="col-xs-1 label label-primary"> 1 </div>
         <div class="progress">
-          <div class="progress-bar progress-bar-info" aria-valuenow="40" aria-valuemax="100" style="width:40%">
-            전체 유저 수
+          <div class="progress-bar progress-bar-info" [style.width.%]="getRatePercent(1)">
+            {{ getRatePercent(1) }}%
           </div>
-          페북 친구 수
         </div>
       </div>
     </div>

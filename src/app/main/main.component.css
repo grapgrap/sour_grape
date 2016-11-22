@@ -1,4 +1,3 @@
-
 .form-control {
   width: 100%;
 }
@@ -10,4 +9,17 @@
 
 .ranking-part > .row {
   margin: 0px;
+}
+
+.label {
+  height: 20px;
+  margin-right: 5px;
+  margin-left: 10px;
+  padding-top: .3em;
+  padding-bottom: .3em;
+  font-size: 100%;
+}
+
+.progress-bar {
+  min-width: 2em;
 }
