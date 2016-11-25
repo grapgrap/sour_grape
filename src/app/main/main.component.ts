@@ -41,7 +41,7 @@ export class MainComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) {
-    let tempUser = new User('AAA', '1234', 'AAA');
+    let tempUser = new User('0235', '1234', 'AAA');
     localStorage.setItem('currentUser', JSON.stringify(tempUser));
   }
 
