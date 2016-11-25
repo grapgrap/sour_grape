@@ -18,12 +18,12 @@
           <button class="btn col-xs-4 col-md-2"
                   [class.btn-primary]="isTasteGameRanking"
                   [class.btn-defualt]="isWholeGameRanking"
-                  (click)="changeToTasteRanking(); getPredictedRate(gameRates);"
+                  (click)="getPredictedRate(gameRates); changeToTasteRanking();"
           > 취향 랭킹 </button>
           <button class="btn col-xs-4 col-md-2"
                   [class.btn-primary]="isWholeGameRanking"
                   [class.btn-defualt]="isTasteGameRanking"
-                  (click)="changeToWholeRanking()"
+                  (click)="getGameRates(); changeToWholeRanking()"
           > 전체 랭킹 </button>
           <button class="btn btn-default col-xs-4 col-md-2 col-md-offset-6 "> 더 보기 </button>
         </div>
