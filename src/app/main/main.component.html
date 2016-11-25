@@ -15,14 +15,33 @@
       <!--랭킹 스위치 파트-->
       <div class="ranking-part">
         <div class="ranking-type-buttongroup row">
-          <button class="btn btn-default col-xs-4 col-md-2"> 취향 랭킹 </button>
-          <button class="btn btn-default col-xs-4 col-md-2"> 전체 랭킹 </button>
+          <button class="btn col-xs-4 col-md-2"
+                  [class.btn-primary]="isTasteGameRanking"
+                  [class.btn-defualt]="isWholeGameRanking"
+                  (click)="changeToTasteRanking(); getPredictedRate(gameRates);"
+          > 취향 랭킹 </button>
+          <button class="btn col-xs-4 col-md-2"
+                  [class.btn-primary]="isWholeGameRanking"
+                  [class.btn-defualt]="isTasteGameRanking"
+                  (click)="changeToWholeRanking()"
+          > 전체 랭킹 </button>
           <button class="btn btn-default col-xs-4 col-md-2 col-md-offset-6 "> 더 보기 </button>
         </div>
       </div>
 
-      <!--랭킹 리스트 파트-->
-      <div class="ranking-list-container panel panel-default">
+      <!--취향 랭킹 리스트 파트-->
+      <div class="ranking-list-container panel panel-default" *ngIf="isTasteGameRanking">
+        <ul class="ranking-list list-group">
+          <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates | slice:0:10; let i = index;">
+            <div class="index col-xs-1"> {{ i + 1 }} </div>
+            <div class="game-title col-xs-10"><a (click)="moveToGameDetailPage(gameRate.gr_title)" > {{ gameRate.gr_title }} </a></div>
+            <div class="game-rate col-xs-1" > {{ results[i] }} </div>
+          </li>
+        </ul>
+      </div>
+
+      <!--전체 랭킹 리스트 파트-->
+      <div class="ranking-list-container panel panel-default" *ngIf="isWholeGameRanking">
         <ul class="ranking-list list-group">
           <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates | slice:0:10; let i = index;">
             <div class="index col-xs-1"> {{ i + 1 }} </div>
@@ -60,7 +79,6 @@
                 </div>
               </div>
             </div>
-
             <div class="4-grape-point">
               <div class="col-xs-1 label label-primary"> 4 </div>
               <div class="progress">
@@ -69,7 +87,6 @@
                 </div>
               </div>
             </div>
-
             <div class="3-grape-point">
               <div class="col-xs-1 label label-primary"> 3 </div>
               <div class="progress">
@@ -78,7 +95,6 @@
                 </div>
               </div>
             </div>
-
             <div class="2-grape-point">
               <div class="col-xs-1 label label-primary"> 2 </div>
               <div class="progress">
@@ -87,7 +103,6 @@
                 </div>
               </div>
             </div>
-
             <div class="1-grape-point">
               <div class="col-xs-1 label label-primary"> 1 </div>
               <div class="progress">
