@@ -21,13 +21,13 @@ export class PredictedRateService {
   }
 
 //예상 평점 계산 함수
-  public computePredictedGameRate( targetGame: Game, targetUser: User, compareUsers: User[] ):Observable<number> {
+  public computePredictedGameRate( targetGame: GameRate, targetUser: User, compareUsers: User[] ):Observable<GameRate> {
     let observableCompareUsers = Observable.from( compareUsers );
 
     return Observable.forkJoin(
       this.gameRateService.getGameRatesById( targetUser.id ),
       observableCompareUsers.map(compareUser => this.gameRateService.getGameRatesById( compareUser.id )).concatAll().toArray(),
-      observableCompareUsers.map(compareUser => this.gameRateService.getGameRateByTitleAndId( targetGame.title, compareUser.id )).concatAll().toArray()
+      observableCompareUsers.map(compareUser => this.gameRateService.getGameRateByTitleAndId( targetGame.gr_title, compareUser.id )).concatAll().toArray()
       //observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( targetUser.id, compareUser.id )).concatAll().toArray()
     ).map(
       res => {
@@ -44,11 +44,12 @@ export class PredictedRateService {
         let b = 0;
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
           compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
+          b = b + Math.abs( similarDummy );
           if( gameRatesByTargetGameAndCompareUsers[i][0] === undefined) continue;
           a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarDummy );
-          b = b + Math.abs( similarDummy );
         }
-        return targetUserMedium + ( a / b );
+        targetGame.rate = targetUserMedium + ( a / b );
+        return targetGame;
       }
     );
   }

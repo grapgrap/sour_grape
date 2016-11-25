@@ -54,15 +54,12 @@ export class MainComponent implements OnInit {
       gameRates => this.gameRates = gameRates,
       error => this.errorMsg = error
     );
-    console.log( this.errorMsg );
   }
 
   public getPredictedRate(gameRates: GameRate[]) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let num = 5;
-    let observableGameRates = Observable.from( this.gameRateService.getGameRates().concatAll() );
-
-    let observalbeGameRate = Observable.from(gameRates);
+    let observableGameRates = Observable.from(gameRates);
     Observable.forkJoin(
       this.gameRateService.getGameRatesById( this.currentUser.id ).flatMap(
         gameRateByCurrentUser => {
@@ -78,14 +75,14 @@ export class MainComponent implements OnInit {
       let compareUsers = res[1];
       let o = [];
       for ( let i = 0; i < this.prediectedGameRates.length; i++ ){
-        o.push( this.predictedGameRateService.computePredictedGameRate( this.prediectedGameRates[i], this.currentUser, comapreUsers ));
+        o.push( this.predictedGameRateService.computePredictedGameRate( this.prediectedGameRates[i], this.currentUser, compareUsers ));
       }
       this.prediectedGameRates = [];
       return Observable.from(o);
     }).concatAll().subscribe( res => {
       res.subscribe( resp => {
         this.prediectedGameRates.push( resp );
-        this.prediectedGameRates.map( x => { x.rate = Math.round( x.rate * 10 ) / 10; } );
+        this.prediectedGameRates.map( x => { console.log(x); x.rate = Math.round( x.rate * 10 ) / 10; } );
         this.prediectedGameRates = this.prediectedGameRates.sort( (a,b) => {
           return a.rate > b.rate ? -1 : ( a.rate < b.rate ? 1 : 0 );
         });//end of sort
