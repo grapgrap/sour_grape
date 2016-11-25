@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {GameService} from "../game.service";
-import {Game} from "../game";
-import {GameRate} from "../game-rate";
-import {GameRateService} from "../game-rate.service";
+import {GameService} from "../service/game.service";
+import {Game} from "../model/game";
+import {GameRate} from "../model/game-rate";
+import {GameRateService} from "../service/game-rate.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -36,18 +36,12 @@ export class GameDetailComponent implements OnInit {
 
   private getGameByTitle(title: string) {
     this.gameService.getGameByTitle(title)
-        .subscribe(
-          game => this.game = game[0],
-          error => this.errorMsg = error
-    );
+      .subscribe( game => this.game = game[0] );
   }
 
   private getGameRateByTitle(title: string) {
     this.gameRateService.getGameRateByTitle(title)
-      .subscribe(
-        gameRate => this.gameRate = gameRate[0],
-        error => this.errorMsg = error
-      );
+      .subscribe( gameRate => this.gameRate = gameRate[0] );
   }
 
   private splitTitleFromUrl(){

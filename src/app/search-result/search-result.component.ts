@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {GameService} from "../game.service";
-import {Game} from "../game";
+import {GameService} from "../service/game.service";
+import {Game} from "../model/game";
 
 @Component({
   selector: 'app-search-result',
@@ -27,10 +27,7 @@ export class SearchResultComponent implements OnInit {
 
   private getGamesByKeyword(keyword: string) {
     this.gameService.getGamesByKeyword(keyword)
-      .subscribe(
-        games => this.results = games,
-        error => this.errorMsg = error
-      );
+      .subscribe( results => this.results = results );
   }
 
   private splitTitleFromUrl() {
