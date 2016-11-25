@@ -62,28 +62,36 @@ export class MainComponent implements OnInit {
     let num = 5;
     let observableGameRates = Observable.from( this.gameRateService.getGameRates().concatAll() );
 
+    let observalbeGameRate = Observable.from(gameRates);
     Observable.forkJoin(
-      observableGameRates.map( gameRate => this.gameService.getGameByTitle( gameRate.gr_title )).concatAll().toArray(),
-      this.gameRateService.getGameRatesById( this.currentUser.id ),
+      this.gameRateService.getGameRatesById( this.currentUser.id ).flatMap(
+        gameRateByCurrentUser => {
+         return observableGameRates.filter(wholeGameRate =>{
+           for( let i = 0; i < gameRateByCurrentUser.length; i++ ) {
+             if(wholeGameRate.gr_title === gameRateByCurrentUser[i].gr_title) return false;
+           }return true;
+         });
+        }).toArray(),
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num )
-    ).map(
-      res => {
-        this.games = res[0];
-        this.users = res[2];
-
-        let observableResult = [];
-        for ( let i = 0; i < this.games.length; i++ ){
-          observableResult[i] = this.predictedGameRateService.computePredictedGameRate( this.games[i][0], this.currentUser, this.users );
-        }
-        let a = Observable.from(observableResult).concatAll();
-        return a;
+    ).map( res =>{
+      this.prediectedGameRates = res[0];
+      let compareUsers = res[1];
+      let o = [];
+      for ( let i = 0; i < this.prediectedGameRates.length; i++ ){
+        o.push( this.predictedGameRateService.computePredictedGameRate( this.prediectedGameRates[i], this.currentUser, comapreUsers ));
       }
-    ).subscribe(res => {
+      this.prediectedGameRates = [];
+      return Observable.from(o);
+    }).concatAll().subscribe( res => {
       res.subscribe( resp => {
-        //this.prediectedGameRates.push(  ) //push(Math.round(resp * 10) / 10 );
-      });
-    });
-  }
+        this.prediectedGameRates.push( resp );
+        this.prediectedGameRates.map( x => { x.rate = Math.round( x.rate * 10 ) / 10; } );
+        this.prediectedGameRates = this.prediectedGameRates.sort( (a,b) => {
+          return a.rate > b.rate ? -1 : ( a.rate < b.rate ? 1 : 0 );
+        });//end of sort
+      });//end of second subscribe
+    });//end of first subscribe
+  };//end of function
 
 
   //랭킹 스위치 함수
