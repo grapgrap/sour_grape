@@ -50,7 +50,7 @@ export class MainComponent implements OnInit {
   }
 
   private getGameRates() {
-    if ( this.gameRates != null ) this.gameRateService.getGameRates().unsubscribe();
+    if ( this.gameRates != null ) this.gameRateService.getGameRates();
 
     this.gameRateService.getGameRates().subscribe(
       gameRates => this.gameRates = gameRates,
