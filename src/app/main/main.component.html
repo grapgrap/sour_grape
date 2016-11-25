@@ -18,7 +18,7 @@
           <button class="btn col-xs-4 col-md-2"
                   [class.btn-primary]="isTasteGameRanking"
                   [class.btn-defualt]="isWholeGameRanking"
-                  (click)="changeToTasteRanking()"
+                  (click)="changeToTasteRanking(); getPredictedRate(gameRates);"
           > 취향 랭킹 </button>
           <button class="btn col-xs-4 col-md-2"
                   [class.btn-primary]="isWholeGameRanking"
@@ -35,7 +35,7 @@
           <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates | slice:0:10; let i = index;">
             <div class="index col-xs-1"> {{ i + 1 }} </div>
             <div class="game-title col-xs-10"><a (click)="moveToGameDetailPage(gameRate.gr_title)" > {{ gameRate.gr_title }} </a></div>
-            <div class="game-rate col-xs-1" > {{ result }} </div>
+            <div class="game-rate col-xs-1" > {{ results[i] }} </div>
           </li>
         </ul>
       </div>

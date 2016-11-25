@@ -25,12 +25,12 @@ import {Observable} from "rxjs";
 export class MainComponent implements OnInit {
   private gameRates: GameRate[];
   private users: User[];
-  private game: Game;
-
+  private games: Game[];
+  private prediectedGameRates: GameRate[];
   private currentUser: User;
   private errorMsg: string = '';
 
-  private result: number;
+  private results: Array<number> = new Array();
   private isTasteGameRanking = false;
   private isWholeGameRanking = true;
 
@@ -47,7 +47,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.getGameRates();
-    this.getPredictedRate();
   }
 
   private getGameRates() {
@@ -58,21 +57,32 @@ export class MainComponent implements OnInit {
     console.log( this.errorMsg );
   }
 
-  public getPredictedRate() {
+  public getPredictedRate(gameRates: GameRate[]) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let num = 5;
+    let observableGameRates = Observable.from( this.gameRateService.getGameRates().concatAll() );
 
     Observable.forkJoin(
-      this.gameRateService.getGameRates()
-        .flatMap( gameRate => this.gameService.getGameByTitle(gameRate[0].gr_title) ),
+      observableGameRates.map( gameRate => this.gameService.getGameByTitle( gameRate.gr_title )).concatAll().toArray(),
+      this.gameRateService.getGameRatesById( this.currentUser.id ),
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num )
-    ).subscribe(
+    ).map(
       res => {
-        this.game = res[0][0];
-        this.users = res[1];
-        this.result = this.predictedGameRateService.computePredictedGameRate( this.game, this.currentUser, this.users );
+        this.games = res[0];
+        this.users = res[2];
+
+        let observableResult = [];
+        for ( let i = 0; i < this.games.length; i++ ){
+          observableResult[i] = this.predictedGameRateService.computePredictedGameRate( this.games[i][0], this.currentUser, this.users );
+        }
+        let a = Observable.from(observableResult).concatAll();
+        return a;
       }
-    );
+    ).subscribe(res => {
+      res.subscribe( resp => {
+        //this.prediectedGameRates.push(  ) //push(Math.round(resp * 10) / 10 );
+      });
+    });
   }
 
 
