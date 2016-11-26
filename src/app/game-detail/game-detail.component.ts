@@ -4,6 +4,10 @@ import {Game} from "../model/game";
 import {GameRate} from "../model/game-rate";
 import {GameRateService} from "../service/game-rate.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
+import {User} from "../model/user";
+import {PredictedRateService} from "../service/predicted-rate.service";
+import {UserService} from "../service/user.service";
 
 @Component({
   selector: 'app-game-detail',
@@ -11,12 +15,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./game-detail.component.css'],
   providers: [
     GameService,
-    GameRateService
+    GameRateService,
+    PredictedRateService,
+    UserService
   ]
 })
 export class GameDetailComponent implements OnInit {
   private game: Game;
   private gameRate: GameRate;
+  private predictedGameRate: number = -1;
+  private currentUserGameRate: number = -1;
+  private currentUser: User;
 
   private title: string;
   private errorMsg: string;
@@ -24,14 +33,21 @@ export class GameDetailComponent implements OnInit {
   constructor(
     private gameService: GameService,
     private gameRateService: GameRateService,
+    private predictedRateService: PredictedRateService,
+    private userService: UserService,
     private router: Router
   ) {
+    let tempUser = new User('AAA', '1234', 'AAA');
+    localStorage.setItem('currentUser', JSON.stringify(tempUser));
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.splitTitleFromUrl();
     this.getGameByTitle(this.title);
     this.getGameRateByTitle(this.title);
+    this.getGameRateByTitleAndId(this.title);
+    this.getPredictedRate(this.title);
   }
 
   private getGameByTitle(title: string) {
@@ -41,7 +57,33 @@ export class GameDetailComponent implements OnInit {
 
   private getGameRateByTitle(title: string) {
     this.gameRateService.getGameRateByTitle(title)
-      .subscribe( gameRate => this.gameRate = gameRate[0] );
+      .subscribe( gameRate => {
+        this.gameRate = gameRate[0];
+      });
+  }
+
+  public getPredictedRate(title:string) {
+    let num = 5;
+
+    Observable.forkJoin(
+      this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num ),
+      this.gameRateService.getGameRateByTitle(title)
+    ).map(res=>{
+      let compareUsers = res[0];
+      let target = res[1][0];
+      return this.predictedRateService.computePredictedGameRate(target, this.currentUser, compareUsers);
+    }).concatAll().subscribe(
+      res => {
+        res.rate = Math.round( res.rate * 10 ) / 10;
+        this.predictedGameRate = res.rate;
+      }
+    );
+  };//end of function
+
+  public getGameRateByTitleAndId( title: string ) {
+    this.gameRateService.getGameRateByTitleAndId( title, this.currentUser.id ).subscribe( res => {
+      this.currentUserGameRate = res[0].rate;
+    });
   }
 
   private splitTitleFromUrl(){

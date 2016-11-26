@@ -10,24 +10,10 @@
 
     <!--랭킹 파트-->
     <article class="col-xs-12 col-md-offset-2 col-md-8">
-      <!--랭킹 스위치 파트-->
-      <div class="ranking-part">
-        <div class="ranking-type-buttongroup row">
-          <button class="btn col-xs-4 col-md-2"
-                  [class.btn-primary]="isTasteGameRanking"
-                  [class.btn-defualt]="isWholeGameRanking"
-                  (click)="getPredictedRate(gameRates); changeToTasteRanking();"
-          > 취향 랭킹 </button>
-          <button class="btn col-xs-4 col-md-2"
-                  [class.btn-primary]="isWholeGameRanking"
-                  [class.btn-defualt]="isTasteGameRanking"
-                  (click)="getGameRates(); changeToWholeRanking();"
-          > 전체 랭킹 </button>
-        </div>
-      </div>
+      <h1> {{ pageTitle }} </h1>
 
       <!--취향 랭킹 리스트 파트-->
-      <div class="ranking-list-container panel panel-default" *ngIf="isTasteGameRanking">
+      <div class="ranking-list-container panel panel-default" *ngIf="isTaste">
         <ul class="ranking-list list-group">
           <li class="ranking-element list-group-item row" *ngFor="let prediectedGameRate of prediectedGameRates; let i = index;">
             <div class="index col-xs-1"> {{ i + 1 }} </div>
@@ -36,9 +22,8 @@
           </li>
         </ul>
       </div>
-
       <!--전체 랭킹 리스트 파트-->
-      <div class="ranking-list-container panel panel-default" *ngIf="isWholeGameRanking">
+      <div class="ranking-list-container panel panel-default" *ngIf="isWhole">
         <ul class="ranking-list list-group">
           <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates | slice:0:20; let i = index;">
             <div class="index col-xs-1"> {{ i + 1 }} </div>

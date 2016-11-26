@@ -10,15 +10,15 @@ import { AppComponent } from './app.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { GameRankMoreComponent } from './game-rank-more/game-rank-more.component';
 import { MypageComponent } from './mypage/mypage.component';
+import { GameRateComponent } from './game-rate/game-rate.component';
 
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent  },
   { path: 'game/:title', component: GameDetailComponent },
   { path: 'search/:keyword', component: SearchResultComponent },
-  { path: 'game-rank-more', component: GameRankMoreComponent },
   { path: 'mypage', component: MypageComponent },
-  { path: 'game-rate', component: MypageComponent }
+  { path: 'game-rank-more/:type', component: GameRankMoreComponent }
 ];
 
 @NgModule({
@@ -28,7 +28,8 @@ const appRoutes: Routes = [
     GameDetailComponent,
     SearchResultComponent,
     GameRankMoreComponent,
-    MypageComponent
+    MypageComponent,
+    GameRateComponent
   ],
   imports: [
     BrowserModule,

@@ -23,3 +23,12 @@
 .progress-bar {
     min-width: 2em;
 }
+
+.game-info-detail {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.game-info-detail > h2 {
+  margin-top: 0px;
+}

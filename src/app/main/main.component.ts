@@ -119,7 +119,10 @@ export class MainComponent implements OnInit {
     }
   }
   public moveToRankMorePage() {
-    this.router.navigate(['/game-rank-more']);
+    let type;
+    if( this.isTasteGameRanking ) type = "taste-game"
+    else if ( this.isWholeGameRanking ) type = "whole-game"
+    this.router.navigate(['/game-rank-more', type]);
   }
 
   //취향 그래프용 함수

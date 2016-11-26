@@ -7,6 +7,7 @@ import {User} from "../model/user";
 import {GameRateService} from "../service/game-rate.service";
 import {PredictedRateService} from "../service/predicted-rate.service";
 import {UserService} from "../service/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-game-rank-more',
@@ -27,13 +28,17 @@ export class GameRankMoreComponent implements OnInit {
   private count = 0;
   private page = 0;
 
-  private isTasteGameRanking = false;
-  private isWholeGameRanking = true;
+  private isTaste:boolean = false;
+  private isWhole:boolean = false;
+
+  private type: string;
+  private pageTitle: string;
 
   constructor(
     private gameRateService: GameRateService,
     private predictedGameRateService: PredictedRateService,
     private userService: UserService,
+    private router: Router
   ) {
     let tempUser = new User('AAA', '1234', 'AAA');
     localStorage.setItem('currentUser', JSON.stringify(tempUser));
@@ -41,25 +46,40 @@ export class GameRankMoreComponent implements OnInit {
 
   ngOnInit() {
     this.getGameRates();
+    this.splitTitleFromUrl();
+    this.setType();
+  }
+
+  private setType() {
+    if( this.type == "taste-game") {
+      this.isTaste = true;
+      this.pageTitle = "취향 게임 랭킹"
+    }
+    else {
+      this.isWhole = true;
+      this.pageTitle = "전체 게임 랭킹"
+    }
   }
 
   private getGameRates() {
-    if ( this.gameRates != null ) {
-      this.gameRateService.getGameRates();
-      return;
-    }
-
     this.gameRateService.getGameRates().subscribe(
-      gameRates => this.gameRates = gameRates,
+      res => {
+        console.log( res );
+        this.gameRates = res;
+        this.getPredictedRate(res);
+      },
       error => this.errorMsg = error
     );
   }
+
   public getPredictedRate(gameRates: GameRate[]) {
+    if ( this.prediectedGameRates.length != 0 ) return;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let show = 10;
     let num = 5;
     let limit = 0;
-    let observableGameRates = Observable.from(gameRates);
+    let temp = gameRates;
+    let observableGameRates = Observable.from(temp);
     Observable.forkJoin(
       this.gameRateService.getGameRatesById( this.currentUser.id ).flatMap(
         gameRateByCurrentUser => {
@@ -75,39 +95,33 @@ export class GameRankMoreComponent implements OnInit {
       let compareUsers = res[1];
       let o = [];
 
-      // 0페이지 일때는 0부터 20개, 1페이지 일때는 20부터 20개
-      if( show * (this.page + 1) > target.length ) {
-        limit = target.length;
-      } else {
-        limit = show * (this.page + 1);
-      }
-      for ( let i = show * this.page; i < limit; i++ ){
+      if( show > target.length ) show = target.length;
+      for ( let i = 0; i < show; i++ ){
         o.push( this.predictedGameRateService.computePredictedGameRate( target[i], this.currentUser, compareUsers ));
       }
       return Observable.from(o);
     }).concatAll().subscribe( res => {
-      console.log( res );
-      this.count = this.count + 1;
-      console.log( this.count );
       res.subscribe( resp => {
-        console.log( resp );
         this.prediectedGameRates.push( resp );
-        this.prediectedGameRates.map( x => { console.log(x); x.rate = Math.round( x.rate * 10 ) / 10; } );
+        this.prediectedGameRates.map( x => { x.rate = Math.round( x.rate * 10 ) / 10; } );
         this.prediectedGameRates = this.prediectedGameRates.sort( (a,b) => {
           return a.rate > b.rate ? -1 : ( a.rate < b.rate ? 1 : 0 );
         });//end of sort
       });//end of second subscribe
     });//end of first subscribe
-    this.page = this.page + 1;
-  }//end of function
+  };//end of function
 
-  //랭킹 스위치 함수
-  public changeToWholeRanking() {
-    this.isTasteGameRanking = false;
-    this.isWholeGameRanking = true;
+  private splitTitleFromUrl(){
+    let currentPath = this.router.url;
+    let temp: string[] = currentPath.split('/game-rank-more/');
+    this.type = temp[1];
   }
-  public changeToTasteRanking() {
-    this.isTasteGameRanking = true;
-    this.isWholeGameRanking = false;
+  public moveToResultPage(keyword: string) {
+    if( keyword.length < 4 ) {
+      alert('최소 4글자 이상을 입력해 주세요');
+      return;
+    } else {
+      this.router.navigate(['/search', keyword]);
+    }
   }
 }
