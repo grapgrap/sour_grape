@@ -11,14 +11,14 @@ export class GameService {
 
   getGames(): Observable<Game[]> {
     return this.http.get( this.url + 'games' )
-      .map( res => res.json() ).timeout(10000);
+      .map( res => res.json() );
   }
   getGameByTitle(title: string):Observable<Game> {
     return this.http.get(this.url + 'game/' + title)
-      .map( res => res.json() ).timeout(10000);
+      .map( res => res.json() );
   }
   getGamesByKeyword(keyword: string):Observable<Game[]> {
     return this.http.get(this.url + 'search/' + keyword)
-      .map( res => res.json() ).timeout(10000);
+      .map( res => res.json() );
   }
 }

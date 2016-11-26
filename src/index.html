@@ -3,14 +3,32 @@
 
 <head>
   <meta charset="utf-8">
-  <title>FinalSourgrape</title>
+  <title>Sourgrape</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    .loader {
+      margin:auto;
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 
 <body>
-<app-root>Loading...</app-root>
+<app-root>
+  <h2 style="text-align: center"> 잠시만 기다려 주세요 </h2>
+  <div class="loader"></div>
+</app-root>
 </body>
-
 </html>

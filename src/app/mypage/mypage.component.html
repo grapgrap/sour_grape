@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="row">
+    <!--평가된 게임 카운트-->
+    <h2 class="text-center"> {{ countType }} </h2>
+    <div class="col-xs-12 col-md-12">
+      <div class="progress game-rate-count-graph-background">
+        <div class="progress-bar progress-bar-info game-rate-count-graph" [style.width.%]="currentGameRateCount"></div>
+      </div>
+      <div class="progress game-rate-count-background">
+        <div class="progress-bar progress-bar-info game-rate-count" [style.width.%]="currentGameRateCount"></div> {{currentGameRateCount}}
+        <div class="max">{{ maxCount }}</div>
+      </div>
+    </div>
+    <div class="col-cs-12 col-md-4">
+      <button class="btn btn-primary" (click)="test()"> 게임 평가 늘리러 가기 </button>
+      <!--취향 그래프 파트-->
+      <div class="taste-graph panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"> 취향 그래프 </h3>
+        </div>
+        <div class="panel-body">
+          <!--게임 평점 그래프-->
+          <div class="5-grape-point">
+            <div class="col-xs-1 label label-primary"> 5 </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info percent-graph" [style.width.%]="getRatePercent(5)">
+                {{ getRatePercent(5) }}%
+              </div>
+            </div>
+          </div>
+          <div class="4-grape-point">
+            <div class="col-xs-1 label label-primary"> 4 </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info percent-graph" [style.width.%]="getRatePercent(4)">
+                {{ getRatePercent(4) }}%
+              </div>
+            </div>
+          </div>
+          <div class="3-grape-point">
+            <div class="col-xs-1 label label-primary"> 3 </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info percent-graph" [style.width.%]="getRatePercent(3)">
+                {{ getRatePercent(3) }}%
+              </div>
+            </div>
+          </div>
+          <div class="2-grape-point">
+            <div class="col-xs-1 label label-primary"> 2 </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info percent-graph" [style.width.%]="getRatePercent(2)">
+                {{ getRatePercent(2) }}%
+              </div>
+            </div>
+          </div>
+          <div class="1-grape-point">
+            <div class="col-xs-1 label label-primary"> 1 </div>
+            <div class="progress">
+              <div class="progress-bar progress-bar-info percent-graph" [style.width.%]="getRatePercent(1)">
+                {{ getRatePercent(1) }}%
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--평가된 게임 리스트 출력-->
+    <div class="col-xs-12 col-md-8">
+      <h2 class="text-center"> 당신의 평균 점수 : {{ gameRateMedium }}점 </h2>
+      <h4 class="text-center"> {{ tasteType }} </h4>
+      <ul class="list-group">
+        <li class="list-group-item row" *ngFor="let gameRate of gameRates; let i = index;">
+          <div class="index col-xs-1"> {{ i + 1 }} </div>
+          <div class="game-title col-xs-10"><a (click)="moveToGameDetailPage(gameRate.gr_title)" > {{ gameRate.gr_title }} </a></div>
+          <div class="game-rate col-xs-1" > {{ gameRate.rate }} </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

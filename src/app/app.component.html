@@ -1,11 +1,20 @@
 <!--네비게이션-->
 <nav class="navbar navbar-default">
-  <a [routerLink]="''"> <img class="brand-img" src="http://placehold.it/150x100" alt=""> </a>
-  <a (click)="toggleMenu(event)"> <img class="user-thumbnail" src="http://placehold.it/80x80" alt=""> </a>
+  <a [routerLink]="''"> <img class="brand-img" src="../dist/big-icon.png" alt=""> </a>
+  <a [routerLink]="'mypage'"> <img class="user-thumbnail" src="http://placehold.it/80x80" alt=""> </a>
 </nav>
-<nav class="row" *ngIf="isOpen">
-  <a class="col-xs-12 col-md-4 btn btn-default" href="/"> 마이페이지 1 </a>
-  <a class="col-xs-12 col-md-4 btn btn-default" href="/"> 마이페이지 2 </a>
-  <a class="col-xs-12 col-md-4 btn btn-default" href="/"> 마이페이지 3 </a>
-</nav>
+
 <router-outlet></router-outlet>
+
+<footer class="bs-docs-footer">
+  <p>
+    본 페이지는
+    <a href="https://github.com/grapgrap/">김종현</a>
+    <a href="https://github.com/hywoong94">황영웅</a>
+    에 의해 제작 되었습니다.
+  </p>
+  <p>
+    코드는 <a href="https://github.com/twbs/bootstrap/blob/master/LICENSE" target="_blank">MIT</a>,
+    문서는 <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>에 의거합니다.
+  </p>
+</footer>

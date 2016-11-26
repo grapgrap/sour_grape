@@ -1,6 +1,8 @@
 export class GameRate {
-    gr_title: string;
-    gr_id: string;
-    rate: number;
-    rate_date: string;
+  constructor(
+    public gr_title: string,
+    public gr_id: string,
+    public rate: number,
+    public rate_date: string
+  ){}
 }

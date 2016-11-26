@@ -1,0 +1,50 @@
+.ranking-part > .row {
+  margin: 0px;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 200%;
+}
+
+.label {
+  height: 20px;
+  margin-right: 5px;
+  margin-left: 10px;
+  padding-top: .3em;
+  padding-bottom: .3em;
+  font-size: 100%;
+}
+
+.percent-graph {
+  min-width: 2em;
+}
+
+.game-rate-count-graph-background{
+  height: 1px;
+  margin-bottom: 1px;
+}
+
+.game-rate-count-graph{
+  height: 1px;
+}
+
+.game-rate-count {
+  background-color: transparent;
+  -webkit-box-shadow: none;
+}
+
+.game-rate-count-background{
+  background-color: transparent;
+  -webkit-box-shadow: none;
+}
+
+.max {
+  float: right;
+}
+
+.h2 {
+  margin-top: 0px;
+}

@@ -1,5 +1,7 @@
 export class Game {
-    title: string;
-    publisher: string;
-    thumbnail_address: string;
+  constructor(
+    public title: string,
+    public publisher: string,
+    public thumbnail_address: string
+  ){}
 }

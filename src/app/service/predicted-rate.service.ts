@@ -23,31 +23,31 @@ export class PredictedRateService {
 //예상 평점 계산 함수
   public computePredictedGameRate( targetGame: GameRate, targetUser: User, compareUsers: User[] ):Observable<GameRate> {
     let observableCompareUsers = Observable.from( compareUsers );
-
     return Observable.forkJoin(
       this.gameRateService.getGameRatesById( targetUser.id ),
       observableCompareUsers.map(compareUser => this.gameRateService.getGameRatesById( compareUser.id )).concatAll().toArray(),
-      observableCompareUsers.map(compareUser => this.gameRateService.getGameRateByTitleAndId( targetGame.gr_title, compareUser.id )).concatAll().toArray()
-      //observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( targetUser.id, compareUser.id )).concatAll().toArray()
+      observableCompareUsers.map(compareUser => this.gameRateService.getGameRateByTitleAndId( targetGame.gr_title, compareUser.id )).concatAll().toArray(),
+      observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( targetUser.id, compareUser.id )).concatAll().toArray()
     ).map(
       res => {
         const gameRatesByTargetUser = res[0];
         const gameRatesByCompareUsers = res[1];
         const gameRatesByTargetGameAndCompareUsers = res[2];
-        //const similarByTargetUserAndCompareUsers = res[3];
-        const similarDummy = 1;
-
+        const similarByTargetUserAndCompareUsers = res[3];
+        const similarDummy = 1; //similarByTargetUserAndCompareUsers[i][0].simScore
 
         let targetUserMedium = this.computeMedium( gameRatesByTargetUser );
         let compareUsersMedium = [];
         let a = 0;
         let b = 0;
+
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
           compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
-          b = b + Math.abs( similarDummy );
+          b = b + Math.abs( similarByTargetUserAndCompareUsers[i][0].simScore );
           if( gameRatesByTargetGameAndCompareUsers[i][0] === undefined) continue;
-          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarDummy );
+          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i][0].simScore );
         }
+        console.log( b );
         targetGame.rate = targetUserMedium + ( a / b );
         return targetGame;
       }

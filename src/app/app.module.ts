@@ -8,12 +8,17 @@ import { GameDetailComponent } from './game-detail/game-detail.component';
 import { MainComponent } from "./main/main.component";
 import { AppComponent } from './app.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { GameRankMoreComponent } from './game-rank-more/game-rank-more.component';
+import { MypageComponent } from './mypage/mypage.component';
 
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent  },
   { path: 'game/:title', component: GameDetailComponent },
-  { path: 'search/:keyword', component: SearchResultComponent }
+  { path: 'search/:keyword', component: SearchResultComponent },
+  { path: 'game-rank-more', component: GameRankMoreComponent },
+  { path: 'mypage', component: MypageComponent },
+  { path: 'game-rate', component: MypageComponent }
 ];
 
 @NgModule({
@@ -21,7 +26,9 @@ const appRoutes: Routes = [
     AppComponent,
     MainComponent,
     GameDetailComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    GameRankMoreComponent,
+    MypageComponent
   ],
   imports: [
     BrowserModule,

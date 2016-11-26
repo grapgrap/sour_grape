@@ -10,11 +10,14 @@ export class UserService {
 
   getUserById(id:string):Observable<User> {
     return this.http.get( this.url + 'user/' + id )
-      .map( res => res.json() ).timeout(10000);
+      .map( res => res.json() );
   }
 
   getCompareUsersByTargetUserId(id: string, num:number):Observable<User[]> {
     return this.http.get( this.url + 'users/' + id + '/' + num )
-      .map( res => res.json() ).timeout(10000);
+      .map( res => {
+          return res.json();
+        }
+      );
   }
 }
