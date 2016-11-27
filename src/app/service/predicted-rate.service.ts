@@ -43,12 +43,13 @@ export class PredictedRateService {
 
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
           compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
-          b = b + Math.abs( similarByTargetUserAndCompareUsers[i][0].simScore );
           if( gameRatesByTargetGameAndCompareUsers[i][0] === undefined) continue;
-          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i][0].simScore );
+          b = b + Math.abs( similarByTargetUserAndCompareUsers[i][0].sim_score );
+          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i][0].sim_score );
         }
-        console.log( b );
+
         targetGame.rate = targetUserMedium + ( a / b );
+        if( b == 0 ) targetGame.rate = 0;
         return targetGame;
       }
     );

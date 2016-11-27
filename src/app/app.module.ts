@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'game/:title', component: GameDetailComponent },
   { path: 'search/:keyword', component: SearchResultComponent },
   { path: 'mypage', component: MypageComponent },
-  { path: 'game-rank-more/:type', component: GameRankMoreComponent }
+  { path: 'game-rank-more', component: GameRankMoreComponent }
 ];
 
 @NgModule({

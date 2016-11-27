@@ -10,22 +10,12 @@
 
     <!--랭킹 파트-->
     <article class="col-xs-12 col-md-offset-2 col-md-8">
-      <h1> {{ pageTitle }} </h1>
+      <h1> 전체 랭킹 리스트 </h1>
 
-      <!--취향 랭킹 리스트 파트-->
-      <div class="ranking-list-container panel panel-default" *ngIf="isTaste">
-        <ul class="ranking-list list-group">
-          <li class="ranking-element list-group-item row" *ngFor="let prediectedGameRate of prediectedGameRates; let i = index;">
-            <div class="index col-xs-1"> {{ i + 1 }} </div>
-            <div class="game-title col-xs-10"><a (click)="moveToGameDetailPage( prediectedGameRate.gr_title)" > {{ prediectedGameRate.gr_title }} </a></div>
-            <div class="game-rate col-xs-1" > {{ prediectedGameRate.rate }} </div>
-          </li>
-        </ul>
-      </div>
       <!--전체 랭킹 리스트 파트-->
-      <div class="ranking-list-container panel panel-default" *ngIf="isWhole">
+      <div class="ranking-list-container panel panel-default">
         <ul class="ranking-list list-group">
-          <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates | slice:0:20; let i = index;">
+          <li class="ranking-element list-group-item row" *ngFor="let gameRate of gameRates; let i = index;">
             <div class="index col-xs-1"> {{ i + 1 }} </div>
             <div class="game-title col-xs-10"><a (click)="moveToGameDetailPage(gameRate.gr_title)" > {{ gameRate.gr_title }} </a></div>
             <div class="game-rate col-xs-1" > {{ gameRate.rate }} </div>
@@ -33,7 +23,7 @@
         </ul>
       </div>
 
-      <button class="btn btn-primary more" (click)="getPredictedRate( gameRates )"> 더보기 </button>
+      <button class="btn btn-primary more"> 더보기 </button>
     </article>
   </div>
 </div>

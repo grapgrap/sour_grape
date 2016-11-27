@@ -37,7 +37,7 @@ export class GameDetailComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) {
-    let tempUser = new User('AAA', '1234', 'AAA');
+    let tempUser = new User('0235', '1234', 'AAA');
     localStorage.setItem('currentUser', JSON.stringify(tempUser));
   }
 
@@ -63,7 +63,7 @@ export class GameDetailComponent implements OnInit {
   }
 
   public getPredictedRate(title:string) {
-    let num = 5;
+    let num = 20;
 
     Observable.forkJoin(
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num ),
@@ -82,6 +82,7 @@ export class GameDetailComponent implements OnInit {
 
   public getGameRateByTitleAndId( title: string ) {
     this.gameRateService.getGameRateByTitleAndId( title, this.currentUser.id ).subscribe( res => {
+      if ( res[0] === undefined ) return;
       this.currentUserGameRate = res[0].rate;
     });
   }
@@ -91,7 +92,6 @@ export class GameDetailComponent implements OnInit {
     let temp: string[] = currentPath.split('/game/');
     this.title = temp[1];
   }
-
   private getRatePercent(target:number):string {
     let percent:string;
     switch (target) {
