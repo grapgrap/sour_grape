@@ -50,13 +50,13 @@ export class GameRateService {
 
   //get game-rate/game :title
   getCountAboutGameRateByTitle( title: string ):Observable<number>{
-    return this.http.get( this.url + 'game-rate/game' + title )
+    return this.http.get( this.url + 'game-rates/game/' + title )
       .map( res => res.json() );
   }
 
   //get game-rate/game :id
   getCountAboutGameRateById( id: string ):Observable<number>{
-    return this.http.get( this.url + 'game-rate/game' + id )
+    return this.http.get( this.url + 'game-rates/user/' + id )
       .map( res => res.json() );
   }
 }

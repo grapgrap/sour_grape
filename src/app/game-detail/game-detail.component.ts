@@ -26,6 +26,7 @@ export class GameDetailComponent implements OnInit {
   private predictedGameRate: number = -1;
   private currentUserGameRate: number = -1;
   private currentUser: User;
+  private countGameRate = [];
 
   private title: string;
   private errorMsg: string;
@@ -48,6 +49,7 @@ export class GameDetailComponent implements OnInit {
     this.getGameRateByTitle(this.title);
     this.getGameRateByTitleAndId(this.title);
     this.getPredictedRate(this.title);
+    this.getRatePercent();
   }
 
   private getGameByTitle(title: string) {
@@ -92,26 +94,20 @@ export class GameDetailComponent implements OnInit {
     let temp: string[] = currentPath.split('/game/');
     this.title = temp[1];
   }
-  private getRatePercent(target:number):string {
-    let percent:string;
-    switch (target) {
-      case 1:
-        percent = '' + 10;
-        break;
-      case 2:
-        percent = '' + 70;
-        break;
-      case 3:
-        percent = '' + 90;
-        break;
-      case 4:
-        percent = '' + 40;
-        break;
-      case 5:
-        percent = '' + 100;
-        break;
-    }
 
-    return percent;
+  //취향 그래프용 함수
+  private getRatePercent() {
+    this.gameRateService.getCountAboutGameRateByTitle( this.title ).subscribe( res => {
+      console.log( res );
+      if( res == null ) return;
+      let total = 0;
+      for( let i = 0; i < res.length; i++ ){
+        total = total + res[i].count;
+      }
+      for( let i = 0; i < res.length; i++ ){
+        this.countGameRate[i] = res[i].count;
+        this.countGameRate[i] = Math.floor(this.countGameRate[i] / total * 100);
+      }
+    });
   }
 }

@@ -21,6 +21,7 @@ export class MypageComponent implements OnInit {
   private tasteType: string;
   private countType: string;
   private gameRateMedium: number;
+  private countGameRate = [];
 
   constructor(
     private gameRateService: GameRateService,
@@ -31,6 +32,7 @@ export class MypageComponent implements OnInit {
     this.getGameRateByCurrentUserId();
     this.tasteType = "";
     this.countType = "";
+    this.getRatePercent();
   }
   public test() {
     this.currentGameRateCount = this.currentGameRateCount + 1;
@@ -54,29 +56,21 @@ export class MypageComponent implements OnInit {
     else this.countType = "굉장합니다! 당신이 해보지 않은 게임이 있을까요?";
   }
 
-  //취향 그래프용 함수
-  private getRatePercent(target:number):string {
-    let percent:string;
-    switch (target) {
-      case 1:
-        percent = '' + 10;
-        break;
-      case 2:
-        percent = '' + 70;
-        break;
-      case 3:
-        percent = '' + 90;
-        break;
-      case 4:
-        percent = '' + 40;
-        break;
-      case 5:
-        percent = '' + 100;
-        break;
-    }
-
-    return percent;
+  private getRatePercent() {
+    this.gameRateService.getCountAboutGameRateById( this.currentUser.id ).subscribe( res => {
+      console.log( res );
+      if( res == null ) return;
+      let total = 0;
+      for( let i = 0; i < res.length; i++ ){
+        total = total + res[i].count;
+      }
+      for( let i = 0; i < res.length; i++ ){
+        this.countGameRate[i] = res[i].count;
+        this.countGameRate[i] = Math.floor(this.countGameRate[i] / total * 100);
+      }
+    });
   }
+
   public getGameRateByCurrentUserId() {
     this.gameRateService.getGameRatesById( this.currentUser.id ).subscribe(
       res => {
@@ -92,6 +86,9 @@ export class MypageComponent implements OnInit {
   public moveToGameRatePage() {
     this.router.navigate(['/game-rate']);
   }
+  public moveToGameDetailPage(title: string) {
+    this.router.navigate(['/game', title]);
+  }
 
   private computeMedium( gameRates: GameRate[] ):number {
     let result = 0;
@@ -99,6 +96,7 @@ export class MypageComponent implements OnInit {
       result = result + gameRates[i].rate;
     }
     result = result / gameRates.length;
+    result = Math.floor( result * 100 ) / 100;
     return result;
   }
 }
