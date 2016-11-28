@@ -56,6 +56,7 @@ export class MypageComponent implements OnInit {
   public setCountType() {
     if( this.currentGameRateCount < 10 ) this.countType = "게임 세계에 발을 들여놓은 걸 환영합니다.";
     else if( this.currentGameRateCount < 20 ) this.countType = "유명한 게임은 한번씩 다 해보셨을 껄요?";
+    else if( this.currentGameRateCount < 30 ) this.countType = "당신은 게임덕후가 분명합니다.";
     else this.countType = "굉장합니다! 당신이 해보지 않은 게임이 있을까요?";
   }
 

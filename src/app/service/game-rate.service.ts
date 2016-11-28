@@ -42,10 +42,16 @@ export class GameRateService {
 
   //post game-rate :id :title :rate :rate-date
   addGameRate( gameRate: GameRate ):Observable<GameRate[]> {
-    let body: string;
-    body = JSON.stringify( gameRate );
-    return this.http.post( this.url + 'game-rate/', body, this.options )
-      .map( res => res.json() );
+    let body: string = JSON.stringify( gameRate );
+    console.log( body );
+    return this.http.post( this.url + 'game-rate/insert/', body, this.options )
+      .map(
+        res => {
+          res.json();
+        }
+      ).catch(
+        error => Observable.throw( error.json().error || 'server error')
+      );
   }
 
   //get game-rate/game :title

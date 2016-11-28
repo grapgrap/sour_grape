@@ -108,4 +108,34 @@ export class GameDetailComponent implements OnInit {
       }
     });
   }
+
+  public max:number = 5;
+  public rate:number = 0;
+
+  public overStar:number;
+
+  public ratingStates:any = [
+    {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'}
+  ];
+
+  public hoveringOver(value:number):void {
+    this.overStar = value;
+  };
+
+  public addRate():void {
+
+    let now = new Date();
+    let dateString = '' + now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate();
+    let gameRate:GameRate = new GameRate( this.currentUser.id, this.game.title, this.overStar, dateString);
+    this.gameRateService.addGameRate( gameRate )
+      .subscribe(res =>{
+        console.log( res );
+        this.predictedGameRate = 0;
+        this.currentUserGameRate = this.overStar
+      });
+  }
+
+  public resetStar():void {
+    this.overStar = void 0;
+  }
 }

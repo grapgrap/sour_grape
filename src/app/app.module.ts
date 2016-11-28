@@ -12,6 +12,8 @@ import { GameRankMoreComponent } from './game-rank-more/game-rank-more.component
 import { MypageComponent } from './mypage/mypage.component';
 import { LoginComponent } from './login/login.component';
 
+import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
+
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent  },
@@ -37,7 +39,8 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule,
     JsonpModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    RatingModule
   ],
   providers: [],
   exports: [
