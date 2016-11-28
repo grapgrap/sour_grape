@@ -36,7 +36,7 @@ export class GameRateService {
 
   //get similar :target :compare
   getSimilarByTargetAndCompare( target:string, compare:string ):Observable<number> {
-    return this.http.get( this.url + 'similar/' + target + '/' + compare )
+    return this.http.get( this.url + 'calcul_simScore/' + target + '/' + compare )
       .map( res => res.json() );
   }
 

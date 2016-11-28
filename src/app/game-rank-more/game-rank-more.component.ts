@@ -21,10 +21,11 @@ import {Router} from "@angular/router";
 })
 export class GameRankMoreComponent implements OnInit {
   private gameRates: GameRate[];
+  private showGameRates: GameRate[] = [];
   private currentUser: User;
   private errorMsg: string = '';
 
-
+  private page: number = 0;
   private type: string;
 
   constructor(

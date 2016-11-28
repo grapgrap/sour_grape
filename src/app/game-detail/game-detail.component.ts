@@ -96,7 +96,6 @@ export class GameDetailComponent implements OnInit {
   //취향 그래프용 함수
   private getRatePercent() {
     this.gameRateService.getCountAboutGameRateByTitle( this.title ).subscribe( res => {
-      console.log( res );
       if( res == null ) return;
       let total = 0;
       for( let i = 0; i < res.length; i++ ){

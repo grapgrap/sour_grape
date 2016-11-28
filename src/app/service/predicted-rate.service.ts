@@ -30,11 +30,10 @@ export class PredictedRateService {
       observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( targetUser.id, compareUser.id )).concatAll().toArray()
     ).map(
       res => {
-        const gameRatesByTargetUser = res[0];
-        const gameRatesByCompareUsers = res[1];
-        const gameRatesByTargetGameAndCompareUsers = res[2];
+        const gameRatesByTargetUser = res[0]; //target 유저의 게임 평가 정보들
+        const gameRatesByCompareUsers = res[1]; //compareUser들의 게임 평가 정보들
+        const gameRatesByTargetGameAndCompareUsers = res[2]; //compare유저들의 타겟 게임에 대한 게임 평가 정보
         const similarByTargetUserAndCompareUsers = res[3];
-        const similarDummy = 1; //similarByTargetUserAndCompareUsers[i][0].simScore
 
         let targetUserMedium = this.computeMedium( gameRatesByTargetUser );
         let compareUsersMedium = [];
@@ -42,10 +41,11 @@ export class PredictedRateService {
         let b = 0;
 
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
+          console.log( gameRatesByTargetGameAndCompareUsers[i][0] );
           compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
-          if( gameRatesByTargetGameAndCompareUsers[i][0] === undefined) continue;
-          b = b + Math.abs( similarByTargetUserAndCompareUsers[i][0].sim_score );
-          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i][0].sim_score );
+          if( gameRatesByTargetGameAndCompareUsers[i].length == 0) continue;
+          b = b + Math.abs( similarByTargetUserAndCompareUsers[i] );
+          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i] );
         }
 
         targetGame.rate = targetUserMedium + ( a / b );
