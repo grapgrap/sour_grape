@@ -12,9 +12,6 @@ import {Router} from "@angular/router";
   ]
 })
 export class MypageComponent implements OnInit {
-  private currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  private randomMsg: string[];
-  private msg: string;
   private gameRates: GameRate[];
   private currentGameRateCount: number;
   private maxCount: number;
@@ -29,11 +26,17 @@ export class MypageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    this.guardLogin();
     this.getGameRateByCurrentUserId();
     this.tasteType = "";
     this.countType = "";
     this.getRatePercent();
   }
+  private guardLogin() {
+    if ( this.currentUser == null ) this.moveToLoginPage();
+  }
+
   public test() {
     this.currentGameRateCount = this.currentGameRateCount + 1;
     this.currentGameRateCount = this.currentGameRateCount - (Math.floor( this.currentGameRateCount / 100 ) * 100);
@@ -83,8 +86,11 @@ export class MypageComponent implements OnInit {
       }
     );
   }
-  public moveToGameRatePage() {
-    this.router.navigate(['/game-rate']);
+  public moveToGameRankMorePage() {
+    this.router.navigate(['/game-rank-more']);
+  }
+  public moveToLoginPage() {
+    this.router.navigate(['/login']);
   }
   public moveToGameDetailPage(title: string) {
     this.router.navigate(['/game', title]);

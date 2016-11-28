@@ -10,9 +10,5 @@ import './rxjs-operators';
 })
 
 export class AppComponent {
-  private isOpen:boolean = false;
-
-  public toggleMenu() {
-    this.isOpen = !(this.isOpen);
-  }
+  private user = JSON.parse(localStorage.getItem('currentUser'));
 }

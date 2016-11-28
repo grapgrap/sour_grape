@@ -38,12 +38,10 @@ export class GameDetailComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) {
-    let tempUser = new User('0235', '1234', 'AAA');
-    localStorage.setItem('currentUser', JSON.stringify(tempUser));
   }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     this.splitTitleFromUrl();
     this.getGameByTitle(this.title);
     this.getGameRateByTitle(this.title);

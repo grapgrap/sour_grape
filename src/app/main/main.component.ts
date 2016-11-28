@@ -21,7 +21,7 @@ import {Observable} from "rxjs";
 })
 export class MainComponent implements OnInit {
   private gameRates: GameRate[] = [];
-  private currentUser: User;
+  private currentUser: User = null;
   private errorMsg: string = '';
   private countGameRate = [];
 
@@ -31,14 +31,16 @@ export class MainComponent implements OnInit {
     private gameRateService: GameRateService,
     private router: Router
   ) {
-    let tempUser = new User('0235', '1234', 'AAA');
-    localStorage.setItem('currentUser', JSON.stringify(tempUser));
-    this.currentUser = JSON.parse( localStorage.getItem('currentUser') );
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    this.guardLogin();
     this.getGameRates();
     this.getRatePercent();
+  }
+  private guardLogin() {
+    if ( this.currentUser == null ) this.moveToLoginPage();
   }
 
   private getGameRates() {
@@ -62,6 +64,9 @@ export class MainComponent implements OnInit {
   }
   public moveToRankMorePage() {
     this.router.navigate(['/game-rank-more']);
+  }
+  public moveToLoginPage() {
+    this.router.navigate(['/login']);
   }
 
   //취향 그래프용 함수

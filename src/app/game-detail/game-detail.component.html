@@ -6,66 +6,72 @@
 
     <!--게임 평점 그래프-->
     <div class="col-xs-12 col-md-8 game-rate-graph row">
-      <div class="5-grape-point">
-        <div class="col-xs-1 label label-primary"> 5 </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[0]">
-            {{ countGameRate[0] }}%
+      <div>
+        <div class="5-grape-point">
+          <div class="col-xs-1 label label-primary"> 5 </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[0]">
+              {{ countGameRate[0] }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="4-grape-point">
+          <div class="col-xs-1 label label-primary"> 4 </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[1]">
+              {{ countGameRate[1] }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="3-grape-point">
+          <div class="col-xs-1 label label-primary"> 3 </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[2]">
+              {{ countGameRate[2] }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="2-grape-point">
+          <div class="col-xs-1 label label-primary"> 2 </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[3]">
+              {{ countGameRate[3] }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="1-grape-point">
+          <div class="col-xs-1 label label-primary"> 1 </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[4]">
+              {{ countGameRate[4] }}%
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="4-grape-point">
-        <div class="col-xs-1 label label-primary"> 4 </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[1]">
-            {{ countGameRate[1] }}%
-          </div>
+      <div *ngIf="predictedGameRate >= 0 && currentUserGameRate < 0">
+        <p> 평점을 남겨주세요 : <div></div></p>
+      </div>
+      <div>
+        <div class="col-xs-6 game-total-rate">
+          <h2> 전체 평점 </h2>
+          <h3> {{ gameRate?.rate }} </h3>
         </div>
-      </div>
-
-      <div class="3-grape-point">
-        <div class="col-xs-1 label label-primary"> 3 </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[2]">
-            {{ countGameRate[2] }}%
-          </div>
+        <div class="col-xs-6 game-taste-rate" *ngIf="predictedGameRate >= 0 && currentUserGameRate < 0">
+          <h2> 취향 평점 </h2>
+          <h3> {{ predictedGameRate }} </h3>
         </div>
-      </div>
-
-      <div class="2-grape-point">
-        <div class="col-xs-1 label label-primary"> 2 </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[3]">
-            {{ countGameRate[3] }}%
-          </div>
+        <div class="col-xs-6 game-taste-rate" *ngIf="currentUserGameRate > 0">
+          <h2> 나의 평점 </h2>
+          <h3> {{ currentUserGameRate }} </h3>
         </div>
-      </div>
-
-      <div class="1-grape-point">
-        <div class="col-xs-1 label label-primary"> 1 </div>
-        <div class="progress">
-          <div class="progress-bar progress-bar-info" [style.width.%]="countGameRate[4]">
-            {{ countGameRate[4] }}%
-          </div>
+        <div class="col-xs-6 game-taste-rate" *ngIf="predictedGameRate < 0 && currentUserGameRate < 0">
+          <h2> 로딩 중입니다. </h2>
+          <h3> 4 ~ 6초면 됩니다! </h3>
         </div>
-      </div>
-
-      <div class="col-xs-6 game-total-rate">
-        <h2> 전체 평점 </h2>
-        <h3> {{ gameRate?.rate }} </h3>
-      </div>
-      <div class="col-xs-6 game-taste-rate" *ngIf="predictedGameRate >= 0 && currentUserGameRate < 0">
-        <h2> 취향 평점 </h2>
-        <h3> {{ predictedGameRate }} </h3>
-      </div>
-      <div class="col-xs-6 game-taste-rate" *ngIf="currentUserGameRate > 0">
-        <h2> 나의 평점 </h2>
-        <h3> {{ currentUserGameRate }} </h3>
-      </div>
-      <div class="col-xs-6 game-taste-rate" *ngIf="predictedGameRate < 0 && currentUserGameRate < 0">
-        <h2> 로딩 중입니다. </h2>
-        <h3> 4 ~ 6초면 됩니다! </h3>
       </div>
     </div>
 

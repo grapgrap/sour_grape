@@ -31,10 +31,10 @@ export class GameRankMoreComponent implements OnInit {
     private gameRateService: GameRateService,
     private router: Router
   ) {
-    this.currentUser = JSON.parse( localStorage.getItem('currentUser') );
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse( sessionStorage.getItem('currentUser') );
     this.getGameRates();
     this.splitTitleFromUrl();
   }
