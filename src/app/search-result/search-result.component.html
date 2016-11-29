@@ -1,7 +1,7 @@
 <div class="container">
   <!--검색 바-->
   <div class="input-group input-group-lg">
-    <input type="text" class="form-control" placeholder="Input game title" #key (keyup.enter)="moveToResultPage(keyword.value)">
+    <input type="text" class="form-control" placeholder="Input game title" #key (keyup.enter)="moveToResultPage(key.value)">
     <span class="input-group-btn">
         <button class="btn btn-default" (click)="moveToResultPage(key.value)"> 검색 </button>
       </span>

@@ -33,7 +33,6 @@ export class SearchResultComponent implements OnInit {
   private splitTitleFromUrl() {
     let currentPath = this.router.url;
     let temp: string[] = currentPath.split('/search/');
-    console.log( temp );
     this.keyword = temp[1];
   }
 
@@ -42,7 +41,9 @@ export class SearchResultComponent implements OnInit {
       alert('최소 2글자 이상을 입력해 주세요');
       return;
     } else {
+      this.getGamesByKeyword(keyword);
       this.router.navigate(['/search', keyword]);
+      this.keyword = keyword;
     }
   }
 

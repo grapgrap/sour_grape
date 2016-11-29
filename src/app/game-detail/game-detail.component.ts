@@ -27,6 +27,7 @@ export class GameDetailComponent implements OnInit {
   private currentUserGameRate: number = -1;
   private currentUser: User;
   private countGameRate = [];
+  private count = [];
 
   private title: string;
   private errorMsg: string;
@@ -63,7 +64,7 @@ export class GameDetailComponent implements OnInit {
   }
 
   public getPredictedRate(title:string) {
-    let num = 20;
+    let num = 50;
 
     Observable.forkJoin(
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num ),
@@ -103,6 +104,7 @@ export class GameDetailComponent implements OnInit {
       }
       for( let i = 0; i < res.length; i++ ){
         this.countGameRate[i] = res[i].count;
+        this.count[i] = res[i].count;
         this.countGameRate[i] = Math.floor(this.countGameRate[i] / total * 100);
       }
     });

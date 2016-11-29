@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   public getAuth() {
-    console.log(this.user);
     this.userService.getUserById(this.user.id).subscribe(res=>{
       if(res.length == 0) alert("아이디를 확인해 주세요");
       else {
