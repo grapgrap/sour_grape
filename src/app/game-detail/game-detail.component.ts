@@ -51,6 +51,13 @@ export class GameDetailComponent implements OnInit {
     this.getRatePercent();
   }
 
+  private getGameByTitle(title:string) {
+    this.gameService.getGameByTitle( title )
+      .subscribe( res=> {
+        this.game = res[0];
+      });
+  }
+
   private getGameRateByTitle(title: string) {
     this.gameRateService.getGameRateByTitle(title)
       .subscribe( gameRate => {
@@ -59,7 +66,7 @@ export class GameDetailComponent implements OnInit {
   }
 
   public getPredictedRate(title:string) {
-    let num = 50;
+    let num = 30;
 
     Observable.forkJoin(
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num ),

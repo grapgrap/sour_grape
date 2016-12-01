@@ -1,7 +1,14 @@
-<button (click)="loadMore()"> 더보기 </button>
-<ul>
-  <li *ngFor="let showGameRate of showGameRates">
-    <p> {{ showGameRate?.gr_title }} </p>
-    <p> {{ showGameRate?.rate }} </p>
-  </li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-md-3" *ngFor="let result of results" (click)="moveToGameDetailPage(result?.gr_title)">
+      <div class="panel panel-default">
+        <img class="panel-body" src="http://placehold.it/231x180">
+        <div class="panel-footer">
+          <h3> {{ result?.gr_title }} </h3>
+          <h4> {{ result?.rate }} </h4>
+        </div>
+      </div>
+    </div>
+    <button class="col-xs-12 col-md-12 btn btn-primary" (click)="loadMore()"> 더보기 </button>
+  </div>
+</div>

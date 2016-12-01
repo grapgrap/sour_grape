@@ -20,7 +20,7 @@ export class PredictedRateService {
     return result;
   }
 
-//예상 평점 계산 함수
+  //예상 평점 계산 함수
   public computePredictedGameRate( targetGame: GameRate, targetUser: User, compareUsers: User[] ):Observable<GameRate> {
     let observableCompareUsers = Observable.from( compareUsers );
     return Observable.forkJoin(

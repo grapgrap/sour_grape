@@ -72,7 +72,6 @@ export class MainComponent implements OnInit {
   //취향 그래프용 함수
   private getRatePercent() {
     this.gameRateService.getCountAboutGameRateById( this.currentUser.id ).subscribe( res => {
-      console.log( res );
       if( res == null ) return;
       let total = 0;
       for( let i = 0; i < res.length; i++ ){
