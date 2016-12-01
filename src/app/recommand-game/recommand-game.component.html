@@ -1,0 +1,7 @@
+<button (click)="loadMore()"> 더보기 </button>
+<ul>
+  <li *ngFor="let showGameRate of showGameRates">
+    <p> {{ showGameRate?.gr_title }} </p>
+    <p> {{ showGameRate?.rate }} </p>
+  </li>
+</ul>

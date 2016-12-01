@@ -51,11 +51,6 @@ export class GameDetailComponent implements OnInit {
     this.getRatePercent();
   }
 
-  private getGameByTitle(title: string) {
-    this.gameService.getGameByTitle(title)
-      .subscribe( game => this.game = game[0] );
-  }
-
   private getGameRateByTitle(title: string) {
     this.gameRateService.getGameRateByTitle(title)
       .subscribe( gameRate => {

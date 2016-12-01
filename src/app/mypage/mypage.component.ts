@@ -96,6 +96,9 @@ export class MypageComponent implements OnInit {
   public moveToGameDetailPage(title: string) {
     this.router.navigate(['/game', title]);
   }
+  public moveToRecommandResultPage(title: string) {
+    this.router.navigate(['/recommand']);
+  }
 
   private computeMedium( gameRates: GameRate[] ):number {
     let result = 0;

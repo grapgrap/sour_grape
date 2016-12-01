@@ -13,6 +13,7 @@ import { MypageComponent } from './mypage/mypage.component';
 import { LoginComponent } from './login/login.component';
 
 import { RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { RecommandGameComponent } from './recommand-game/recommand-game.component';
 
 
 const appRoutes: Routes = [
@@ -21,7 +22,8 @@ const appRoutes: Routes = [
   { path: 'search/:keyword', component: SearchResultComponent },
   { path: 'mypage', component: MypageComponent },
   { path: 'game-rank-more', component: GameRankMoreComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'recommand', component: RecommandGameComponent }
 ];
 
 @NgModule({
@@ -32,7 +34,8 @@ const appRoutes: Routes = [
     SearchResultComponent,
     GameRankMoreComponent,
     MypageComponent,
-    LoginComponent
+    LoginComponent,
+    RecommandGameComponent
   ],
   imports: [
     BrowserModule,

@@ -41,7 +41,6 @@ export class PredictedRateService {
         let b = 0;
 
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
-          console.log( gameRatesByTargetGameAndCompareUsers[i][0] );
           compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
           if( gameRatesByTargetGameAndCompareUsers[i].length == 0) continue;
           b = b + Math.abs( similarByTargetUserAndCompareUsers[i] );
