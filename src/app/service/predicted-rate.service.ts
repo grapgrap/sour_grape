@@ -57,6 +57,7 @@ export class PredictedRateService {
 
         targetGame.rate = targetUserMedium + ( a / b );
         if( b == 0 ) targetGame.rate = 0;
+        if( targetGame.rate > 5 ) targetGame.rate = 5;
         return targetGame;
       }
     );
