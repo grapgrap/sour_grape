@@ -21,31 +21,39 @@ export class PredictedRateService {
   }
 
   //예상 평점 계산 함수
-  public computePredictedGameRate( targetGame: GameRate, targetUser: User, compareUsers: User[] ):Observable<GameRate> {
+  public computePredictedGameRate( targetGame: GameRate, gameRatesByTargetUser: GameRate[], compareUsers: User[] ):Observable<GameRate> {
     let observableCompareUsers = Observable.from( compareUsers );
     return Observable.forkJoin(
-      this.gameRateService.getGameRatesById( targetUser.id ),
       observableCompareUsers.map(compareUser => this.gameRateService.getGameRatesById( compareUser.id )).concatAll().toArray(),
-      observableCompareUsers.map(compareUser => this.gameRateService.getGameRateByTitleAndId( targetGame.gr_title, compareUser.id )).concatAll().toArray(),
-      observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( targetUser.id, compareUser.id )).concatAll().toArray()
+      observableCompareUsers.map(compareUser => this.gameRateService.getSimilarByTargetAndCompare( gameRatesByTargetUser[0].gr_id, compareUser.id )).concatAll().toArray()
     ).map(
       res => {
-        const gameRatesByTargetUser = res[0]; //target 유저의 게임 평가 정보들
-        const gameRatesByCompareUsers = res[1]; //compareUser들의 게임 평가 정보들
-        const gameRatesByTargetGameAndCompareUsers = res[2]; //compare유저들의 타겟 게임에 대한 게임 평가 정보
-        const similarByTargetUserAndCompareUsers = res[3];
+        const gameRatesByCompareUsers = res[0]; //compareUser들의 게임 평가 정보들
+        const similarByTargetUserAndCompareUsers = res[1]; //유사도
 
         let targetUserMedium = this.computeMedium( gameRatesByTargetUser );
         let compareUsersMedium = [];
         let a = 0;
         let b = 0;
 
+        console.log( gameRatesByCompareUsers );
+
         for( let i = 0; i < gameRatesByCompareUsers.length; i++ ){
-          compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] );
-          if( gameRatesByTargetGameAndCompareUsers[i].length == 0) continue;
-          b = b + Math.abs( similarByTargetUserAndCompareUsers[i] );
-          a = a + ( (gameRatesByTargetGameAndCompareUsers[i][0].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i] );
-        }
+          compareUsersMedium[i] = this.computeMedium( gameRatesByCompareUsers[i] ); // Rl의 평균
+          console.log( gameRatesByCompareUsers[i][0] );
+          for ( let j = 0; j < gameRatesByCompareUsers[i].length; j++ ) { // Rli를 찾는 루프
+            if( gameRatesByCompareUsers[i][j].gr_title != targetGame.gr_title ) { //Rli 가 없으면 뛰어 넘음.
+              continue;
+            } else {
+              b = b + Math.abs( similarByTargetUserAndCompareUsers[i] );
+              a = a + ( (gameRatesByCompareUsers[i][j].rate - compareUsersMedium[i]) * similarByTargetUserAndCompareUsers[i] );
+            }
+          } // end of j for loop
+        } // end of i for loop
+
+        console.log( a );
+        console.log( b );
+        console.log( targetUserMedium );
 
         targetGame.rate = targetUserMedium + ( a / b );
         if( b == 0 ) targetGame.rate = 0;

@@ -19,7 +19,7 @@ import {Router} from "@angular/router";
 })
 export class RecommandGameComponent implements OnInit {
   private gameRates: GameRate[] = [];
-  private showGameRates: GameRate[] = [];
+  private currentUserGameRates: GameRate[] = [];
   private results: GameRate[] = [];
   private currentUser: User;
   private page: number = 1;
@@ -48,7 +48,7 @@ export class RecommandGameComponent implements OnInit {
   public getPredictedGameRate() {
     //현재 유저가 평가한 모든 데이터를 들고 와서
     this.gameRateService.getGameRatesById( this.currentUser.id ).subscribe(res=>{
-
+      this.currentUserGameRates = res;
       // 현재 유저가 평가한 데이터는 제외한다.
       for( let i = 0; i < res.length; i++ ){
         for( let j = 0; j < this.gameRates.length; j++ ){
@@ -65,10 +65,10 @@ export class RecommandGameComponent implements OnInit {
 
   // 예상 점수 계산 함수
   public computePredictedGameRate() {
-    let num = 30;
+    let num = 10;
 
     // 필터링 된 데이터의 길이만큼 루프가 돈다.
-    for ( let i = 0; i < this.gameRates.length; i++ ) {
+    for ( let i = 0; i < 12; i++ ) {
       let title = this.gameRates[i].gr_title;
 
       // 현재 유저의 비교 유저를 num 만큼 들고오고, 인덱스에 해당하는 게임에 대한 게임 레이트 정보를 들고온다.
@@ -80,18 +80,17 @@ export class RecommandGameComponent implements OnInit {
         let target = res[1][0];
 
         // 인덱스에 해당하는 게임 레이트 정보와 현제 유저, 비교 유저 한명을 데리고 예상 점수를 판단한다.
-        return this.predictedRateService.computePredictedGameRate(target, this.currentUser, compareUsers);
+        return this.predictedRateService.computePredictedGameRate(target, this.currentUserGameRates, compareUsers);
       }).concatAll().subscribe(res => {
           //판단된 예상 점수는 x.x 형태로 만들어져서 showGameRate의 인덱스 번째에 삽입된다.
           res.rate = Math.round( res.rate * 10 ) / 10;
-          this.showGameRates[i] = res;
+          this.results[i] = res;
       });
     }
   }
 
   public loadMore() {
     let count = 1;
-    this.results = this.showGameRates.slice(0, count * this.page);
     this.page ++;
   }
 

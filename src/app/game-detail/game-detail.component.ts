@@ -70,17 +70,16 @@ export class GameDetailComponent implements OnInit {
 
     Observable.forkJoin(
       this.userService.getCompareUsersByTargetUserId( this.currentUser.id, num ),
-      this.gameRateService.getGameRateByTitle(title)
+      this.gameRateService.getGameRateByTitle(title),
+      this.gameRateService.getGameRatesById( this.currentUser.id )
     ).map(res=>{
       let compareUsers = res[0];
       let target = res[1][0];
-      return this.predictedRateService.computePredictedGameRate(target, this.currentUser, compareUsers);
-    }).concatAll().subscribe(
-      res => {
+      return this.predictedRateService.computePredictedGameRate(target, res[2], compareUsers);
+    }).concatAll().subscribe(res => {
         res.rate = Math.round( res.rate * 10 ) / 10;
         this.predictedGameRate = res.rate;
-      }
-    );
+    });
   };//end of function
 
   public getGameRateByTitleAndId( title: string ) {
