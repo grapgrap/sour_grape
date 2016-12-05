@@ -1,4 +1,8 @@
 <div class="container">
+  <div *ngIf="results.length < 1">
+    <h1 class="text-center"> 으디보자.... 당신의 취향이... </h1>
+    <div class="loader"></div>
+  </div>
   <div class="row">
     <div class="col-xs-6 col-md-3" *ngFor="let result of results" (click)="moveToGameDetailPage(result?.gr_title)">
       <div class="panel panel-default">
@@ -9,6 +13,6 @@
         </div>
       </div>
     </div>
-    <button class="col-xs-12 col-md-12 btn btn-primary" (click)="loadMore()"> 더보기 </button>
+    <button *ngIf="results.length >= 1" class="col-xs-12 col-md-12 btn btn-primary" (click)="loadMore()"> 더보기 </button>
   </div>
 </div>
